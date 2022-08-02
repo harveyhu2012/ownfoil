@@ -1,10 +1,14 @@
-FROM python:3.9-alpine
+ARG ARCH=
+FROM ${ARCH}python:3.9-alpine
 
 RUN mkdir /app
 RUN mkdir /games
+RUN mkdir -p /run/nginx
 
 COPY ./libs /app
 COPY ./nginx.conf /etc/nginx/http.d/default.conf
+COPY ./nginx.conf /etc/nginx/conf.d/default.conf
+
 RUN touch /etc/nginx/.htpasswd
 
 RUN apk add --update --no-cache nginx openssl
